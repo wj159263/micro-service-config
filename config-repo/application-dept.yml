@@ -1,0 +1,68 @@
+server:
+  port: ${PORT:8001} #写成这样，在vm options 添加-DPORT=8002，就能开启不同端口的多个程序
+
+feign:
+  hystrix:
+    enabled: true
+
+
+#注册服务
+eureka:
+  client:
+    registerWithEureka: true #服务注册开关
+    fetchRegistry: true #服务发现开关
+    serviceUrl: #Eureka客户端与Eureka服务端进行交互的地址，多个中间用逗号分隔
+      #defaultZone: ${EUREKA_SERVER:http://localhost:50101/eureka/,http://localhost:50102/eureka/}
+      #defaultZone: http://localhost:7000/eureka  #注册服务的地址
+       defaultZone: http://eureka7000.com:7000/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    prefer-ip-address:  true  #将自己的ip地址注册到Eureka服务中
+    #ip-address: ${IP_ADDRESS:127.0.0.1} #手动写上，eureka就不用解析主机名，我们给他解析好了
+    instance-id: ${spring.application.name}:${server.port} #指定实例id,别名
+
+# eureka的info页面配置，build.version以$开头结尾，必须再parent工程中配置build
+info:
+  app.name: microservicecloud-dep
+  company.name: xx.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+      health:
+        show-details: ALWAYS
+
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+  type-aliases-package: com.wj.springcloud.entity    # 所有Entity别名类所在包
+  mapper-locations:
+    - classpath:mybatis/mapper/**/*.xml                       # mapper映射文件
+
+spring:
+   application:
+    name: microservicecloud-dept           #很重要，对外暴露服务的名字。入住eureka的名字
+   servlet:
+    multipart:
+      enabled: true
+      location: classpath:/static/
+      max-file-size: 10MB
+      max-request-size: 100MB
+      resolve-lazily: false
+      file-size-threshold: 0
+   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+    driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
+    url: jdbc:mysql://localhost:3306/cloudDB01              # 数据库名称
+    username: root
+    password: root
+    dbcp2:
+      min-idle: 5                                           # 数据库连接池的最小维持连接数
+      initial-size: 5                                       # 初始化连接数
+      max-total: 5                                          # 最大连接数
+      max-wait-millis: 200                                  # 等待连接获取的最大超时时间
+
