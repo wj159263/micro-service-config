@@ -1,5 +1,5 @@
-server:
-  port: ${PORT:8001} #写成这样，在vm options 添加-DPORT=8002，就能开启不同端口的多个程序
+﻿server:
+  port: ${PORT:8008} #写成这样，在vm options 添加-DPORT=8002，就能开启不同端口的多个程序
 
 feign:
   hystrix:
