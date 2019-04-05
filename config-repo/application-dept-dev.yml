@@ -1,4 +1,4 @@
-server:
+﻿server:
   port: ${PORT:8001} #写成这样，在vm options 添加-DPORT=8002，就能开启不同端口的多个程序
 
 feign:
@@ -44,6 +44,8 @@ mybatis:
     - classpath:mybatis/mapper/**/*.xml                       # mapper映射文件
 
 spring:
+   zipkin:
+    base-url: http://localhost:3344
    application:
     name: microservicecloud-dept           #很重要，对外暴露服务的名字。入住eureka的名字
    servlet:
