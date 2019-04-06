@@ -1,0 +1,50 @@
+spring:
+  boot:
+      admin:
+        client:
+          url: http://localhost:8085
+  zipkin:
+      base-url: http://localhost:3344
+  application:
+    name: manager-gateway-zuul-9527
+server:
+  port: 9527
+
+
+#注册服务
+eureka:
+  client:
+    registerWithEureka: true #服务注册开关
+    fetchRegistry: true #服务发现开关
+    serviceUrl: #Eureka客户端与Eureka服务端进行交互的地址，多个中间用逗号分隔
+      #defaultZone: ${EUREKA_SERVER:http://localhost:50101/eureka/,http://localhost:50102/eureka/}
+      #defaultZone: http://localhost:7000/eureka  #注册服务的地址
+       defaultZone: http://eureka7000.com:7000/eureka/
+  instance:
+    #使用路由访问81的方法http://geteway-9527.com:9527/consumer-dept-feign-81/consumer/dept/get/3
+    instance-id: geteway-9527.com
+    prefer-ip-address:  true  #将自己的ip地址注册到Eureka服务中
+    #ip-address: ${IP_ADDRESS:127.0.0.1} #手动写上，eureka就不用解析主机名，我们给他解析好了
+    #instance-id: ${spring.application.name}:${server.port} #指定实例id,别名
+
+# eureka的info页面配置，build.version以$开头结尾，必须再parent工程中配置build
+info:
+  app.name: micro-service-zuul-gateway-9527
+  company.name: x1x.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+zuul:
+  routes:
+    #http://geteway-9527.com:9527/dept/consumer/dept/get/2
+    manager-provider-user-7788: /user/**  #必须要配一个才能启动
+    #abcd:   #随便写，但唯一，三行等效上面一行
+      #path: /abc/**
+      #serviceId: consumer-dept-feign-81
+      #url: xxx #使用url就没有负载均衡及ribbon功能
+  #ignored-services: #consumer-dept-80 #排除，多个服务用逗号隔开
+    #mydept.serviceId: consumer-dept-feign-81
+    #mydept.path: /mydept/**
+
+
+
