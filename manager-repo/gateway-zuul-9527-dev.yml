@@ -19,7 +19,7 @@ eureka:
     serviceUrl: #Eureka客户端与Eureka服务端进行交互的地址，多个中间用逗号分隔
       #defaultZone: ${EUREKA_SERVER:http://localhost:50101/eureka/,http://localhost:50102/eureka/}
       #defaultZone: http://localhost:7000/eureka  #注册服务的地址
-       defaultZone: http://eureka7000.com:7000/eureka/
+       defaultZone: http://localhost:7000/eureka/
   instance:
     #使用路由访问81的方法http://geteway-9527.com:9527/consumer-dept-feign-81/consumer/dept/get/3
     instance-id: geteway-9527.com

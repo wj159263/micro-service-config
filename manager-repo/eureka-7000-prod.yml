@@ -1,0 +1,27 @@
+server:
+  port: 7000
+
+spring:
+  boot:
+      admin:
+        client:
+          url: http://192.168.38.128:8085
+  zipkin:
+    base-url: http://192.168.38.128:3344
+  application:
+    name: eureka-7000
+#eureka集群：1、创建2个不同端口的eureka项目；
+eureka:
+  instance:
+    #hostname: 192.168.38.128 #eureka服务端的实例名称,单机可以192.168.38.128
+    hostname: eureka7000.com
+  client:
+    register-with-eureka: true     #false表示不向注册中心注册自己。单机为false，高可用为true
+    fetch-registry: true     #false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务。单机为false，高可用为true
+    service-url:
+      #高可用时，defaultZone域名不能为192.168.38.128
+      #defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/       #设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址（单机）。
+      defaultZone: http://192.168.38.128:7002/eureka/,http://192.168.38.128:7003/eureka/ #往哪里注册
+    server:
+      enable-self-preservation: false #是否开启自我保护模式,开发模式最好为false
+      eviction-interval-timer-in-ms: 60000 #服务注册表清理间隔（单位毫秒，默认是60*1000）
