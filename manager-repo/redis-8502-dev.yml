@@ -41,7 +41,7 @@ spring:
         max-wait: 1
         max-idle: 8
         min-idle: 0
-      timeout: 0
+      timeout: 10
   boot:
     admin:
       client:
