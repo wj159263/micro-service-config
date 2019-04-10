@@ -1,5 +1,5 @@
 server:
-  port: ${PORT:6379} #写成这样，在vm options 添加-DPORT=8002，就能开启不同端口的多个程序
+  port: ${PORT:8502} #写成这样，在vm options 添加-DPORT=8002，就能开启不同端口的多个程序
 
 
 #注册服务
@@ -18,7 +18,7 @@ eureka:
 
 # eureka的info页面配置，build.version以$开头结尾，必须再parent工程中配置build
 info:
-  app.name: manager-redis-6379
+  app.name: manager-redis-8502
   company.name: xx.com
   build.artifactId: $project.artifactId$
   build.version: $project.version$
@@ -33,6 +33,15 @@ management:
         show-details: ALWAYS
 
 spring:
+  redis:
+      host: 192.168.38.128
+      port: 6379
+      pool:
+        max-active: 8
+        max-wait: 1
+        max-idle: 8
+        min-idle: 0
+      timeout: 0
   boot:
     admin:
       client:
@@ -40,4 +49,4 @@ spring:
   zipkin:
     base-url: http://localhost:3344
   application:
-    name: manager-redis-6379           #很重要，对外暴露服务的名字。入住eureka的名字
+    name: manager-redis-8502           #很重要，对外暴露服务的名字。入住eureka的名字
