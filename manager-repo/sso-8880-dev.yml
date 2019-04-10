@@ -37,6 +37,12 @@ management:
         show-details: ALWAYS
 
 spring:
+  thymeleaf:
+      cache: false  #开发时部开启缓存
+      mode: LEGACYHTML5  #非严谨的html
+      encoding: UTF-8
+      servlet:
+        content-type: text/html
   boot:
     admin:
       client:
