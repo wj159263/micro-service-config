@@ -38,10 +38,9 @@ spring:
       port: 6379
       pool:
         max-active: 8
-        max-wait: 1
+        max-wait: -1ms
         max-idle: 8
         min-idle: 0
-      timeout: 10000
   boot:
     admin:
       client:
