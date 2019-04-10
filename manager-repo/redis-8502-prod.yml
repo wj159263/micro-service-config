@@ -1,0 +1,43 @@
+server:
+  port: ${PORT:6379} #写成这样，在vm options 添加-DPORT=8002，就能开启不同端口的多个程序
+
+
+#注册服务
+eureka:
+  client:
+    registerWithEureka: true #服务注册开关
+    fetchRegistry: true #服务发现开关
+    serviceUrl: #Eureka客户端与Eureka服务端进行交互的地址，多个中间用逗号分隔
+      #defaultZone: ${EUREKA_SERVER:http://localhost:50101/eureka/,http://localhost:50102/eureka/}
+      #defaultZone: http://localhost:7000/eureka  #注册服务的地址
+       defaultZone: http://localhost:7000/eureka/
+  instance:
+    prefer-ip-address:  true  #将自己的ip地址注册到Eureka服务中
+    #ip-address: ${IP_ADDRESS:127.0.0.1} #手动写上，eureka就不用解析主机名，我们给他解析好了
+    instance-id: ${spring.application.name}:${server.port} #指定实例id,别名
+
+# eureka的info页面配置，build.version以$开头结尾，必须再parent工程中配置build
+info:
+  app.name: manager-redis-6379
+  company.name: xx.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+      health:
+        show-details: ALWAYS
+
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8085
+  zipkin:
+    base-url: http://localhost:3344
+  application:
+    name: manager-redis-6379           #很重要，对外暴露服务的名字。入住eureka的名字
