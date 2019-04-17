@@ -37,6 +37,12 @@ management:
         show-details: ALWAYS
 
 spring:
+  rabbitmq:
+     host: 127.0.0.1
+     port: 5672
+     username: guest
+     password: guest
+     virtual-host: /
   thymeleaf:
     cache: false  #开发时部开启缓存
     mode: LEGACYHTML5  #非严谨的html
